@@ -28,13 +28,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.kotlin.R
 
-@Preview(showBackground = true)
+
 @Composable
-fun ProductScreen() {
+fun ProductScreen(navController: NavController) {
     val context = LocalContext.current
     var quantity by remember { mutableIntStateOf(0) }
     var isAvailable by remember { mutableStateOf(true) }
@@ -105,6 +105,7 @@ fun ProductScreen() {
                     "Đã thêm sản phẩm vào danh sách yêu thích",
                     Toast.LENGTH_SHORT
                 ).show()
+                navController.popBackStack()
             },
             modifier = Modifier
                 .align(Alignment.BottomEnd)

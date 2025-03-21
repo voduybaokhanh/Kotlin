@@ -17,7 +17,7 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
-
+    
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -44,8 +44,8 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation("androidx.compose.ui:ui:1.3.0")
-    implementation("androidx.compose.material:material:1.3.0")
-    implementation("androidx.navigation:navigation-compose:2.5.3")
+    implementation("androidx.compose.material:material:1.7.8")
+    implementation("androidx.navigation:navigation-compose:2.8.9")
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)

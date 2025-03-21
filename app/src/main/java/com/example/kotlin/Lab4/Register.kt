@@ -28,10 +28,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 
-@Preview(showBackground = true)
 @Composable
-fun RegisterScreen() {
+fun RegisterScreen(navController: NavController) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
@@ -105,6 +106,7 @@ fun RegisterScreen() {
                         message = "Đăng ký thành công!"
                     }
                 }
+                navController.navigate("cuahang")
             },
             colors = ButtonDefaults.buttonColors(containerColor = Color.Blue)
         ) {
@@ -121,4 +123,12 @@ fun RegisterScreen() {
             modifier = Modifier.fillMaxWidth()
         )
     }
+}
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun PreviewRegisterScreen() {
+    // Use rememberNavController for preview
+    val navController = rememberNavController()
+    RegisterScreen(navController = navController)
 }
