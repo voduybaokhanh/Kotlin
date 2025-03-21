@@ -8,13 +8,13 @@
       <SelectionState runConfigName="PreviewMyApp">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="ProductScreen">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
       <SelectionState runConfigName="PreviewBoarding">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
       <SelectionState runConfigName="PreviewHomeBeautifulLayout">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="PreviewLogin">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>

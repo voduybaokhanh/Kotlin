@@ -28,7 +28,7 @@ import com.example.kotlin.R
 
 
 @Composable
-fun Boarding() {
+fun BoardingScreen() {
     Box(
         modifier = Modifier
             .fillMaxSize(),
@@ -100,6 +100,6 @@ fun Boarding() {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun PreviewBoarding() {
-    Boarding()
+    BoardingScreen()
 }
 
