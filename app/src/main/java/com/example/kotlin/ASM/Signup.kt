@@ -39,10 +39,12 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.kotlin.R
 
 @Composable
-fun SignUpScreen() {
+fun SignUpScreen(navController: NavController) {
     var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -189,7 +191,7 @@ fun SignUpScreen() {
             Spacer(modifier = Modifier.height(50.dp))
 
             Button(
-                onClick = { /* Handle sign up */ },
+                onClick = { navController.navigate("dangnhap") },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp),
@@ -208,8 +210,8 @@ fun SignUpScreen() {
                     text = "Already have an account?",
                     color = Color.Gray
                 )
-                TextButton(onClick = { /* Handle sign in */ }) {
-                    Text(text = "SIGN IN", color = Color.Black)
+                androidx.compose.material3.Button(onClick = { navController.navigate("dangnhap") }) {
+                    Text("Log In", color = Color.Black)
                 }
             }
         }
@@ -219,5 +221,6 @@ fun SignUpScreen() {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun PreviewSignUp() {
-    SignUpScreen()
+    val navController = rememberNavController()
+    SignUpScreen(navController)
 }

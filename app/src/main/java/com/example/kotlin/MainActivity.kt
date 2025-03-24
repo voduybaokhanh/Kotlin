@@ -8,7 +8,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.kotlin.ASM.BoardingScreen
+import com.example.kotlin.ASM.LoginScreen
+import com.example.kotlin.ASM.NotificationScreen
+import com.example.kotlin.ASM.SignUpScreen
 import com.example.kotlin.ui.theme.KotlinTheme
 
 class MainActivity : ComponentActivity() {
@@ -23,17 +28,14 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-
 @Composable
 fun MyApp() {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = "summary") {
-//        composable("summary") { RegisterScreen(navController) }
-//        composable("cuahang") { ProductScreen(navController) }
-//        composable("preview1") { DangKy() }
-//        composable("preview2") { ClickApp() }
-//        composable("preview3") { PoemScreen() }
-//        composable("preview4") { CalculatorScreen() }
+        composable("chao") { BoardingScreen(navController) }
+        composable("dangnhap") { LoginScreen(navController) }
+        composable("dangky") { SignUpScreen(navController) }
+        composable("thongbao") { NotificationScreen(navController) }
     }
 }
 

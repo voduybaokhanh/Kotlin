@@ -1,4 +1,4 @@
-package com.example.kotlin.Lab4
+package com.example.kotlin.Lab4.p1
 
 
 import androidx.compose.foundation.layout.Arrangement

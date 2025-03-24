@@ -1,4 +1,4 @@
-package com.example.kotlin.Lab4
+package com.example.kotlin.Lab4.p1
 
 import android.widget.Toast
 import androidx.compose.foundation.Image

@@ -1,5 +1,5 @@
 package com.example.kotlin.ASM
-// Xây dựng giao diện: Màn hình chào, Màn hình đăng nhập, Màn hình đăng ký, Thông báo. Xử lý navigation
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,16 +26,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.kotlin.R
 
-
 @Composable
-fun BoardingScreen() {
+fun BoardingScreen(navController: NavController) {
     Box(
         modifier = Modifier
-            .fillMaxSize(),
-
-        ) {
+            .fillMaxSize()
+    ) {
         Image(
             painter = painterResource(id = R.drawable.boarding_bg),
             contentDescription = null,
@@ -86,7 +86,7 @@ fun BoardingScreen() {
             ) {
                 Button(
                     shape = RectangleShape,
-                    onClick = {},
+                    onClick = { navController.navigate("dangnhap") },
                     colors = ButtonDefaults.buttonColors(Color.Black),
                     modifier = Modifier
                         .width(159.dp)
@@ -103,6 +103,6 @@ fun BoardingScreen() {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun PreviewBoarding() {
-    BoardingScreen()
+    val navController = rememberNavController()
+    BoardingScreen(navController)
 }
-

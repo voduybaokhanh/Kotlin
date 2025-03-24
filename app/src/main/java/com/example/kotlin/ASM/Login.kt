@@ -38,10 +38,12 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.kotlin.R
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(navController: NavController) {
 
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -173,7 +175,7 @@ fun LoginScreen() {
                     )
                     Spacer(modifier = Modifier.height(40.dp))
                     Button(
-                        onClick = {},
+                        onClick = {navController.navigate("thongbao")},
                         shape = RoundedCornerShape(8.dp),
                         modifier = Modifier
                             .width(285.dp)
@@ -184,11 +186,9 @@ fun LoginScreen() {
                         Text("Log in", color = Color.White)
                     }
                     Spacer(modifier = Modifier.height(40.dp))
-                    Text(
-                        text = "SIGN UP",
-                        color = Color.Black,
-                        fontSize = 18.sp,
-                    )
+                    Button(onClick = { navController.navigate("dangky") }) {
+                        Text("Sign Up", color = Color.Black)
+                    }
                 }
             }
         }
@@ -198,5 +198,6 @@ fun LoginScreen() {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun PreviewLogin() {
-    LoginScreen()
+    val navController = rememberNavController()
+    LoginScreen(navController)
 }
