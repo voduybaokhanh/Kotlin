@@ -2,32 +2,12 @@ package com.example.kotlin.ASM
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Divider
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
-import androidx.compose.material.TextFieldDefaults
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -190,7 +170,7 @@ fun SignUpScreen(navController: NavController) {
             Spacer(modifier = Modifier.height(50.dp))
 
             Button(
-                onClick = { navController.navigate("dangnhap") },
+                onClick = { navController.navigate("login") },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp),
@@ -209,9 +189,13 @@ fun SignUpScreen(navController: NavController) {
                     text = "Already have an account?",
                     color = Color.Gray
                 )
-                androidx.compose.material3.Button(onClick = { navController.navigate("dangnhap") }) {
-                    Text("Log In", color = Color.Black)
-                }
+                Spacer(modifier = Modifier.width(4.dp))
+                Text(
+                    text = "Log In",
+                    color = Color.Black,
+                    fontSize = 16.sp,
+                    modifier = Modifier.clickable { navController.navigate("login") },
+                )
             }
         }
     }
@@ -219,7 +203,7 @@ fun SignUpScreen(navController: NavController) {
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun PreviewSignUp() {
+fun SignUpScreenPreview() {
     val navController = rememberNavController()
-    SignUpScreen(navController)
+    SignUpScreen(navController = navController)
 }

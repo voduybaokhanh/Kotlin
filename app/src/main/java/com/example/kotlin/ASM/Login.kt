@@ -1,5 +1,6 @@
 package com.example.kotlin.ASM
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -44,7 +45,6 @@ import com.example.kotlin.R
 
 @Composable
 fun LoginScreen(navController: NavController) {
-
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var isPasswordVisible by remember { mutableStateOf(false) }
@@ -160,7 +160,7 @@ fun LoginScreen(navController: NavController) {
                             IconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {
                                 Icon(
                                     painter = painterResource(
-                                        id = if (isPasswordVisible) android.R.drawable.ic_menu_close_clear_cancel else android.R.drawable.ic_menu_view
+                                        id = if (isPasswordVisible) R.drawable.ic_visibility_off else R.drawable.ic_visibility
                                     ),
                                     contentDescription = "Toggle Password Visibility"
                                 )
@@ -175,7 +175,7 @@ fun LoginScreen(navController: NavController) {
                     )
                     Spacer(modifier = Modifier.height(40.dp))
                     Button(
-                        onClick = {navController.navigate("thongbao")},
+                        onClick = { navController.navigate("notification") },
                         shape = RoundedCornerShape(8.dp),
                         modifier = Modifier
                             .width(285.dp)
@@ -186,9 +186,12 @@ fun LoginScreen(navController: NavController) {
                         Text("Log in", color = Color.White)
                     }
                     Spacer(modifier = Modifier.height(40.dp))
-                    Button(onClick = { navController.navigate("dangky") }) {
-                        Text("Sign Up", color = Color.Black)
-                    }
+                    Text(
+                        text = "Sign Up",
+                        color = Color.Black,
+                        fontSize = 16.sp,
+                        modifier = Modifier.clickable { navController.navigate("signup") },
+                    )
                 }
             }
         }
@@ -197,7 +200,7 @@ fun LoginScreen(navController: NavController) {
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun PreviewLogin() {
+fun LoginScreenPreview() {
     val navController = rememberNavController()
-    LoginScreen(navController)
+    LoginScreen(navController = navController)
 }

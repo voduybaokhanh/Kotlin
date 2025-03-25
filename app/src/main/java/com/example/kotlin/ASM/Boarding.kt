@@ -1,14 +1,7 @@
 package com.example.kotlin.ASM
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -23,11 +16,9 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.example.kotlin.R
 
 @Composable
@@ -86,7 +77,7 @@ fun BoardingScreen(navController: NavController) {
             ) {
                 Button(
                     shape = RectangleShape,
-                    onClick = { navController.navigate("dangnhap") },
+                    onClick = { navController.navigate("login") },
                     colors = ButtonDefaults.buttonColors(Color.Black),
                     modifier = Modifier
                         .width(159.dp)
@@ -98,11 +89,4 @@ fun BoardingScreen(navController: NavController) {
             }
         }
     }
-}
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun PreviewBoarding() {
-    val navController = rememberNavController()
-    BoardingScreen(navController)
 }
