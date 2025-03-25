@@ -1,7 +1,14 @@
 package com.example.kotlin.Lab4.p2
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
@@ -58,7 +65,7 @@ fun S1(phoneNumber: String, onPhoneNumberChange: (String) -> Unit) {
             singleLine = true
         )
         Button(
-            onClick = { /* Handle login */ },
+            onClick = { onPhoneNumberChange(phoneNumber) },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 16.dp)
@@ -81,5 +88,5 @@ fun S1(phoneNumber: String, onPhoneNumberChange: (String) -> Unit) {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun S1Preview() {
-    S1("", {})
+    S1("") {}
 }

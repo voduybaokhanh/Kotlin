@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun S3() {
+fun S3(onNext: () -> Unit) {
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
 
@@ -92,7 +92,7 @@ fun S3() {
         )
         Spacer(modifier = Modifier.height(16.dp))
         Button(
-            onClick = { /* Handle continue action */ },
+            onClick = { onNext() },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(48.dp),
@@ -106,5 +106,5 @@ fun S3() {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun S3Preview() {
-    S3()
+    S3 {}
 }
