@@ -65,7 +65,7 @@ fun S1(phoneNumber: String, onPhoneNumberChange: (String) -> Unit) {
             singleLine = true
         )
         Button(
-            onClick = { onPhoneNumberChange(phoneNumber) },
+            onClick = { if (phoneNumber.isNotEmpty()) onPhoneNumberChange(phoneNumber) },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 16.dp)
@@ -88,5 +88,5 @@ fun S1(phoneNumber: String, onPhoneNumberChange: (String) -> Unit) {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun S1Preview() {
-    S1("") {}
+    S1("0774749399") {}
 }

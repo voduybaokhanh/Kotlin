@@ -41,7 +41,11 @@ fun MainScreen() {
     var phoneNumber by remember { mutableStateOf("") }
 
     NavHost(navController = navController, startDestination = "S1") {
-        composable("S1") { S1(phoneNumber) { phoneNumber = it; navController.navigate("S2") } }
+        composable("S1") {
+            S1(phoneNumber) {
+                phoneNumber = it; if (phoneNumber.isNotEmpty()) navController.navigate("S2")
+            }
+        }
         composable("S2") { S2(phoneNumber) { navController.navigate("S3") } }
         composable("S3") { S3 { navController.navigate("S4") } }
         composable("S4") { S4() }
