@@ -35,7 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.kotlin.R
 
-data class Product(val name: String, val imageRes: Int)
+data class ProductItem(val name: String, val imageRes: Int)
 
 @Composable
 fun ProductScreen() {
@@ -44,8 +44,6 @@ fun ProductScreen() {
             .fillMaxSize()
             .background(Color.White)
     ) {
-
-
         // List of product categories with images
         LazyColumn(
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
@@ -53,9 +51,9 @@ fun ProductScreen() {
             item {
                 CategorySection(
                     "Vegetables", listOf(
-                        Product("Potato", R.mipmap.potato),
-                        Product("Carrot", R.mipmap.carrot),
-                        Product("Onion", R.mipmap.onion)
+                        ProductItem("Potato", R.drawable.potato),
+                        ProductItem("Carrot", R.drawable.carrot),
+                        ProductItem("Onion", R.drawable.onion)
                     )
                 )
             }
@@ -63,9 +61,9 @@ fun ProductScreen() {
             item {
                 CategorySection(
                     "Grocery", listOf(
-                        Product("Rice", R.mipmap.rice),
-                        Product("Buckwheat", R.mipmap.buckwheat),
-                        Product("Cous Cous", R.mipmap.couscous)
+                        ProductItem("Rice", R.drawable.rice),
+                        ProductItem("Buckwheat", R.drawable.buckwheat),
+                        ProductItem("Cous Cous", R.drawable.couscous)
                     )
                 )
             }
@@ -73,9 +71,9 @@ fun ProductScreen() {
             item {
                 CategorySection(
                     "For home", listOf(
-                        Product("Rug", R.mipmap.rug),
-                        Product("Screwdriver", R.mipmap.screwdriver),
-                        Product("Towels", R.mipmap.towels)
+                        ProductItem("Rug", R.drawable.rug),
+                        ProductItem("Screwdriver", R.drawable.screwdriver),
+                        ProductItem("Towels", R.drawable.towels)
                     )
                 )
             }
@@ -83,9 +81,9 @@ fun ProductScreen() {
             item {
                 CategorySection(
                     "Vegetables", listOf(
-                        Product("Potato", R.mipmap.potato),
-                        Product("Carrot", R.mipmap.carrot),
-                        Product("Onion", R.mipmap.onion)
+                        ProductItem("Potato", R.drawable.potato),
+                        ProductItem("Carrot", R.drawable.carrot),
+                        ProductItem("Onion", R.drawable.onion)
                     )
                 )
             }
@@ -93,9 +91,8 @@ fun ProductScreen() {
     }
 }
 
-
 @Composable
-fun CategorySection(title: String, products: List<Product>) {
+fun CategorySection(title: String, products: List<ProductItem>) {
     Column(modifier = Modifier.fillMaxWidth()) {
         Text(
             text = title,
@@ -113,7 +110,7 @@ fun CategorySection(title: String, products: List<Product>) {
 }
 
 @Composable
-fun ProductCard(product: Product) {
+fun ProductCard(product: ProductItem) {
     LocalContext.current
     var showDialog by remember { mutableStateOf(false) }
 
