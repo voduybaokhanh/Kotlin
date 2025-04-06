@@ -1,6 +1,6 @@
 package com.example.kotlin.ASM
 
-import HomeScreen
+
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -26,7 +26,7 @@ fun HomeNavigationScreen() {
                 HomeScreen()
             }
             composable(BottomNavItem.Product.route) {
-                ProductScreen()
+                CartScreen()
             }
             composable(BottomNavItem.Notifications.route) {
                 NotificationScreen()
