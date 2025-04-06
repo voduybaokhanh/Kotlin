@@ -41,6 +41,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navOptions
 import com.example.kotlin.R
 
 @Composable
@@ -175,7 +176,11 @@ fun LoginScreen(navController: NavController) {
                     )
                     Spacer(modifier = Modifier.height(40.dp))
                     Button(
-                        onClick = { navController.navigate("notification") },
+                        onClick = {
+                            navController.navigate("home", navOptions {
+                                popUpTo("boarding") { inclusive = true }
+                            })
+                        },
                         shape = RoundedCornerShape(8.dp),
                         modifier = Modifier
                             .width(285.dp)
