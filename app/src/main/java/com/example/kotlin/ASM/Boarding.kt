@@ -61,15 +61,17 @@ fun BoardingScreen(navController: NavController) {
             Text(
                 text = "The best simple place where you discover most wonderful furnitures and make your home beautiful",
                 color = Color(0xFF808080),
-                fontSize = 18.sp,
+                fontSize = 16.sp,
                 fontWeight = FontWeight.W400,
                 textAlign = TextAlign.Justify,
-                lineHeight = 35.sp,
+                lineHeight = 26.sp, 
                 letterSpacing = 0.sp,
                 modifier = Modifier
-                    .padding(top = 20.dp, start = 29.dp)
-                    .width(286.dp)
+                    .padding(horizontal = 24.dp, vertical = 16.dp)
+                    .fillMaxWidth(0.85f)
             )
+
+
 
             Spacer(modifier = Modifier.height(50.dp))
             Box(

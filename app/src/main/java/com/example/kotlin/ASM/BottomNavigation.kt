@@ -5,13 +5,16 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.kotlin.R
+import androidx.compose.foundation.layout.size
 
 sealed class BottomNavItem(
     val route: String,
@@ -54,7 +57,8 @@ fun BottomNavBar(navController: NavController) {
                 icon = {
                     Icon(
                         painter = painterResource(id = if (selected) item.selectedIcon else item.icon),
-                        contentDescription = item.route
+                        contentDescription = item.route,
+                        modifier = Modifier.size(24.dp)
                     )
                 },
                 selected = selected,

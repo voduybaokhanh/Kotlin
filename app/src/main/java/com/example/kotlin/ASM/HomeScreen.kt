@@ -1,20 +1,32 @@
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -104,15 +116,16 @@ fun HomeScreen() {
                 ) {
                     Box(
                         modifier = Modifier
-                            .size(50.dp)
+                            .size(50.dp) // vẫn giữ kích thước tổng thể hộp icon
                             .clip(RoundedCornerShape(12.dp))
                             .background(if (index == 0) Color.Black else Color.White)
-                            .padding(12.dp),
+                            .padding(11.dp), // padding = (50 - 28)/2 = 11dp để icon 28dp nằm giữa
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
                             painter = painterResource(id = category.icon),
                             contentDescription = category.name,
+                            modifier = Modifier.size(28.dp), // icon chính xác 28x28
                             tint = if (index == 0) Color.White else Color.Black
                         )
                     }
@@ -142,12 +155,16 @@ fun HomeScreen() {
             columns = GridCells.Fixed(2),
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
-            modifier = Modifier.fillMaxWidth()
-        ) {
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f) // 💡 Cho grid chiếm phần còn lại của màn
+        )
+        {
             items(products) { product ->
                 ProductItem(product)
             }
         }
+
     }
 }
 
@@ -157,14 +174,15 @@ fun ProductItem(product: Product) {
 
     Column(
         modifier = Modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(8.dp))
+            .height(253.dp)
+            .fillMaxWidth() // ← CHỈ ĐỊNH WIDTH
+            .clip(RoundedCornerShape(12.dp))
             .background(Color.White)
     ) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(150.dp)
+                .height(150.dp) // chia chiều cao hợp lý
                 .padding(8.dp),
             contentAlignment = Alignment.Center
         ) {
@@ -178,15 +196,16 @@ fun ProductItem(product: Product) {
             IconButton(
                 onClick = { isFavorite = !isFavorite },
                 modifier = Modifier
+                    .size(30.dp)
                     .align(Alignment.BottomEnd)
-                    .size(32.dp)
-                    .clip(RoundedCornerShape(8.dp))
-                    .background(Color.White)
+                    .clip(RoundedCornerShape(6.dp))
+                    .background(Color(0x60606066))
+                    .padding(5.dp)
             ) {
                 Icon(
-                    imageVector = if (isFavorite) Icons.Filled.Favorite else Icons.Default.FavoriteBorder,
-                    contentDescription = "Favorite",
-                    tint = if (isFavorite) Color.Red else Color.Gray,
+                    painter = painterResource(id = R.drawable.ic_shopping_bag),
+                    contentDescription = "Add to cart",
+                    tint = if (isFavorite) Color.Black else Color.White,
                     modifier = Modifier.size(16.dp)
                 )
             }
@@ -210,6 +229,7 @@ fun ProductItem(product: Product) {
         Spacer(modifier = Modifier.height(8.dp))
     }
 }
+
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
