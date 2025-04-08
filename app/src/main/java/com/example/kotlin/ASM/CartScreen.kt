@@ -213,7 +213,8 @@ fun CartItemRow(
     ) {
         // Hình ảnh sản phẩm
         Image(
-            painter = painterResource(id = item.imageRes.takeIf { it != 0 } ?: R.drawable.img_stand),
+            painter = painterResource(id = item.imageRes.takeIf { it != 0 }
+                ?: R.drawable.img_stand),
             contentDescription = item.name,
             modifier = Modifier
                 .size(80.dp) // Giữ kích thước ảnh
@@ -286,12 +287,13 @@ fun CartItemRow(
                 )
 
                 // Nút giảm (-)
-                IconButton(onClick = {
-                    if (item.quantity > 1) {
-                        onQuantityChanged(item.id, item.quantity - 1)
-                    }
-                }, modifier = Modifier
-                    .size(24.dp)
+                IconButton(
+                    onClick = {
+                        if (item.quantity > 1) {
+                            onQuantityChanged(item.id, item.quantity - 1)
+                        }
+                    }, modifier = Modifier
+                        .size(24.dp)
                 ) {
                     Text("−", fontSize = 16.sp, color = Color.Black)
                 }
