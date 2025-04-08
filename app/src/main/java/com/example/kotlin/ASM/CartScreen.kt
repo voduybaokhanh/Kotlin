@@ -2,6 +2,7 @@ package com.example.kotlin.ASM
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -67,30 +68,32 @@ fun CartScreen() {
             .background(Color(0xFFF5F5F5))
             .padding(horizontal = 16.dp)
     ) {
+        // Header with icons and title
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 16.dp),
-            verticalAlignment = Alignment.CenterVertically
+                .height(44.dp)
+                .padding(top = 12.dp, start = 16.dp, end = 16.dp, bottom = 12.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            IconButton(onClick = { /* TODO: Xử lý quay lại */ }, modifier = Modifier.size(24.dp)) {
-
+            IconButton(onClick = { }) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_arrow_left),
-                    contentDescription = "Quay lại",
-                    tint = Color.Black
+                    contentDescription = "Back",
+                    modifier = Modifier.size(20.dp)
                 )
             }
-            Spacer(modifier = Modifier.weight(1f))
             Text(
                 text = "My cart",
+                fontWeight = FontWeight.Bold,
                 fontSize = 18.sp,
-                fontWeight = FontWeight.SemiBold,
                 color = Color.Black
             )
-            Spacer(modifier = Modifier.weight(1f))
-            Box(modifier = Modifier.size(24.dp))
+            Box(modifier = Modifier.size(20.dp)) // Empty box to balance layout
         }
+
+        Spacer(modifier = Modifier.height(20.dp))
 
         Column(modifier = Modifier.weight(1f)) {
             cartItems.forEachIndexed { index, item ->
@@ -140,7 +143,7 @@ fun CartScreen() {
                 singleLine = true
             )
             IconButton(
-                onClick = { /* TODO: Xử lý logic áp dụng mã */ },
+                onClick = { },
                 modifier = Modifier
                     .size(40.dp)
                     .clip(RoundedCornerShape(6.dp))
