@@ -1,7 +1,10 @@
 package com.example.kotlin.ASM
 
+import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -33,6 +36,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -41,7 +45,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.kotlin.R
 
-// Data classes for our app
+// Data classes
 data class Category(val name: String, val icon: Int)
 data class Product(
     val name: String,
@@ -52,13 +56,16 @@ data class Product(
 
 @Composable
 fun HomeScreen() {
+    // Get context at composable function level
+    // This is used in the ProductItem click handler
+    val context = LocalContext.current
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Color(0xFFF5F5F5))
             .padding(16.dp)
     ) {
-        // Top bar with search and cart
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -70,19 +77,9 @@ fun HomeScreen() {
                 modifier = Modifier.size(24.dp)
             )
 
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(
-                    text = "Make home",
-                    fontSize = 12.sp,
-                    color = Color.Gray
-                )
-                Text(
-                    text = "BEAUTIFUL",
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold
-                )
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Text("Make home", fontSize = 12.sp, color = Color.Gray)
+                Text("BEAUTIFUL", fontSize = 18.sp, fontWeight = FontWeight.Bold)
             }
 
             Icon(
@@ -94,21 +91,15 @@ fun HomeScreen() {
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // Categories
-        val categories = remember {
-            listOf(
-                Category("Popular", R.drawable.ic_star),
-                Category("Chair", R.drawable.ic_chair),
-                Category("Table", R.drawable.ic_table),
-                Category("Armchair", R.drawable.ic_armchair),
-                Category("Bed", R.drawable.ic_bed),
-            )
-        }
+        val categories = listOf(
+            Category("Popular", R.drawable.ic_star),
+            Category("Chair", R.drawable.ic_chair),
+            Category("Table", R.drawable.ic_table),
+            Category("Armchair", R.drawable.ic_armchair),
+            Category("Bed", R.drawable.ic_bed),
+        )
 
-        LazyRow(
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
-            modifier = Modifier.fillMaxWidth()
-        ) {
+        LazyRow(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
             items(categories.size) { index ->
                 val category = categories[index]
                 Column(
@@ -117,73 +108,90 @@ fun HomeScreen() {
                 ) {
                     Box(
                         modifier = Modifier
-                            .size(50.dp) // vẫn giữ kích thước tổng thể hộp icon
+                            .size(50.dp)
                             .clip(RoundedCornerShape(12.dp))
                             .background(if (index == 0) Color.Black else Color.White)
-                            .padding(11.dp), // padding = (50 - 28)/2 = 11dp để icon 28dp nằm giữa
+                            .padding(11.dp),
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
                             painter = painterResource(id = category.icon),
                             contentDescription = category.name,
-                            modifier = Modifier.size(28.dp), // icon chính xác 28x28
+                            modifier = Modifier.size(28.dp),
                             tint = if (index == 0) Color.White else Color.Black
                         )
                     }
                     Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = category.name,
-                        fontSize = 12.sp,
-                        textAlign = TextAlign.Center
-                    )
+                    Text(category.name, fontSize = 12.sp, textAlign = TextAlign.Center)
                 }
             }
         }
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // Products grid
-        val products = remember {
-            listOf(
-                Product("Black Simple Lamp", 12.00, R.drawable.img_lamp),
-                Product("Minimal Stand", 25.00, R.drawable.img_stand),
-                Product("Coffee Chair", 20.00, R.drawable.img_chair),
-                Product("Simple Desk", 50.00, R.drawable.img_desk)
-            )
-        }
-
+        val products = listOf(
+            Product("Black Simple Lamp", 12.00, R.drawable.img_lamp),
+            Product("Minimal Stand", 25.00, R.drawable.img_stand),
+            Product("Coffee Chair", 20.00, R.drawable.img_chair),
+            Product("Simple Desk", 50.00, R.drawable.img_desk)
+        )
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
             modifier = Modifier
                 .fillMaxWidth()
-                .weight(1f) // 💡 Cho grid chiếm phần còn lại của màn
-        )
-        {
+                .weight(1f)
+        ) {
             items(products) { product ->
-                ProductItem(product)
+                // Use context from outer scope
+                ProductItem(product = product) {
+                    // Using context directly from the outer scope
+                    try {
+                        val intent = Intent(context, Class.forName("com.example.kotlin.ASM.ProductDetailScreen")).apply {
+                            putExtra("name", product.name)
+                            putExtra("price", product.price)
+                            putExtra("imageRes", product.imageRes)
+
+                            // Log để debug
+                            android.util.Log.d(
+                                "HomeScreen",
+                                "Launching product: ${product.name}, image: ${product.imageRes}"
+                            )
+                        }
+                        context.startActivity(intent)
+                    } catch (e: Exception) {
+                        android.util.Log.e("HomeScreen", "Error launching ProductDetailScreen", e)
+                    }
+                }
             }
+
         }
 
     }
 }
 
 @Composable
-fun ProductItem(product: Product) {
+fun ProductItem(product: Product, onClick: () -> Unit) {
     var isFavorite by remember { mutableStateOf(product.isFavorite) }
 
     Column(
         modifier = Modifier
             .height(253.dp)
-            .fillMaxWidth() // ← CHỈ ĐỊNH WIDTH
+            .fillMaxWidth()
             .clip(RoundedCornerShape(12.dp))
             .background(Color.White)
+            .clickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = null // Material 3 handles ripple effects automatically
+            ) {
+                onClick()
+            }
     ) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(150.dp) // chia chiều cao hợp lý
+                .height(150.dp)
                 .padding(8.dp),
             contentAlignment = Alignment.Center
         ) {
@@ -212,25 +220,14 @@ fun ProductItem(product: Product) {
             }
         }
 
-        Column(
-            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
-        ) {
-            Text(
-                text = product.name,
-                fontSize = 14.sp,
-                maxLines = 1
-            )
-            Text(
-                text = "$ ${product.price}",
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Bold
-            )
+        Column(modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)) {
+            Text(product.name, fontSize = 14.sp, maxLines = 1)
+            Text("$ ${product.price}", fontSize = 14.sp, fontWeight = FontWeight.Bold)
         }
 
         Spacer(modifier = Modifier.height(8.dp))
     }
 }
-
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
