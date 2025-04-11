@@ -1,5 +1,6 @@
-package com.example.kotlin.ASM
+package com.example.kotlin.ASM.screen
 
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -14,7 +15,6 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.kotlin.R
-import androidx.compose.foundation.layout.size
 
 sealed class BottomNavItem(
     val route: String,

@@ -1,4 +1,4 @@
-package com.example.kotlin.ASM
+package com.example.kotlin.ASM.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -103,7 +104,7 @@ fun ProfileScreen() {
 
 @Composable
 fun ProfileOption(title: String, subtitle: String) {
-    androidx.compose.material.Card(
+    Card(
         shape = RoundedCornerShape(8.dp),
         elevation = 4.dp,
         backgroundColor = Color.White,

@@ -1,6 +1,7 @@
-package com.example.kotlin.ASM
+package com.example.kotlin.ASM.screen
 
 import android.content.Intent
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -148,20 +149,23 @@ fun HomeScreen() {
                 ProductItem(product = product) {
                     // Using context directly from the outer scope
                     try {
-                        val intent = Intent(context, Class.forName("com.example.kotlin.ASM.ProductDetailScreen")).apply {
+                        val intent = Intent(
+                            context,
+                            Class.forName("com.example.kotlin.ASM.screen.ProductDetailScreen")
+                        ).apply {
                             putExtra("name", product.name)
                             putExtra("price", product.price)
                             putExtra("imageRes", product.imageRes)
 
                             // Log để debug
-                            android.util.Log.d(
+                            Log.d(
                                 "HomeScreen",
                                 "Launching product: ${product.name}, image: ${product.imageRes}"
                             )
                         }
                         context.startActivity(intent)
                     } catch (e: Exception) {
-                        android.util.Log.e("HomeScreen", "Error launching ProductDetailScreen", e)
+                        Log.e("HomeScreen", "Error launching ProductDetailScreen", e)
                     }
                 }
             }

@@ -13,10 +13,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.kotlin.ASM.BoardingScreen
-import com.example.kotlin.ASM.HomeNavigationScreen
-import com.example.kotlin.ASM.LoginScreen
-import com.example.kotlin.ASM.SignUpScreen
+import com.example.kotlin.ASM.screen.BoardingScreen
+import com.example.kotlin.ASM.screen.HomeNavigationScreen
+import com.example.kotlin.ASM.screen.LoginScreen
+import com.example.kotlin.ASM.screen.SignUpScreen
 import com.example.kotlin.ui.theme.KotlinTheme
 
 class MainActivity : ComponentActivity() {

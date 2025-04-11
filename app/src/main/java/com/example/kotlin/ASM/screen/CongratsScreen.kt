@@ -1,5 +1,6 @@
-package com.example.kotlin.ASM
+package com.example.kotlin.ASM.screen
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -86,7 +87,7 @@ fun CongratsScreen() {
             Button(
                 onClick = { /* Handle back navigation */ },
                 colors = ButtonDefaults.buttonColors(containerColor = Color.White),
-                border = androidx.compose.foundation.BorderStroke(1.dp, Color.Black),
+                border = BorderStroke(1.dp, Color.Black),
                 shape = RoundedCornerShape(8.dp),
                 modifier = Modifier.fillMaxWidth()
             ) {

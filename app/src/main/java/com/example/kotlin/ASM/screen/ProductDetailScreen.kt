@@ -1,6 +1,7 @@
-package com.example.kotlin.ASM
+package com.example.kotlin.ASM.screen
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Image
@@ -32,9 +33,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -48,9 +49,9 @@ class ProductDetailScreen : AppCompatActivity() {
         val name = intent.getStringExtra("name") ?: "Unknown"
         val price = intent.getDoubleExtra("price", 0.0)
         val imageRes = intent.getIntExtra("imageRes", R.drawable.img_stand)
-        
+
         // Log để debug
-        android.util.Log.d("ProductDetailScreen", "Received product: $name, price: $price, image: $imageRes")
+        Log.d("ProductDetailScreen", "Received product: $name, price: $price, image: $imageRes")
 
         setContent {
             ProductDetailScreenUI(name = name, price = price, imageRes = imageRes)
@@ -74,7 +75,7 @@ fun ProductDetailScreenUI(name: String, price: Double, imageRes: Int) {
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            IconButton(onClick = { 
+            IconButton(onClick = {
                 // Use the Activity context to finish
                 (context as? AppCompatActivity)?.finish()
             }) {
