@@ -47,7 +47,14 @@ fun MainScreen() {
 
         // Main app screen with bottom navigation
         composable("home") {
-            HomeNavigationScreen()
+            HomeNavigationScreen(
+                onLogout = {
+                    // Navigate back to login screen
+                    navController.navigate("login") {
+                        popUpTo(0) { inclusive = true }
+                    }
+                }
+            )
         }
     }
 }

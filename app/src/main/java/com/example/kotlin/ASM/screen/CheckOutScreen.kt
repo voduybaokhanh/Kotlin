@@ -215,14 +215,16 @@ fun SubmitButton(onCompleteCheckout: () -> Unit) {
         onClick = onCompleteCheckout,
         modifier = Modifier
             .fillMaxWidth()
-            .height(56.dp),
+            .height(56.dp)
+            .padding(bottom = 16.dp),
         shape = RoundedCornerShape(8.dp),
         colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
     ) {
         Text(
             text = "SUBMIT ORDER",
-            color = Color.White,
-            fontWeight = FontWeight.Bold
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Medium,
+            color = Color.White
         )
     }
 }

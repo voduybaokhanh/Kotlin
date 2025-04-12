@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -24,15 +25,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.kotlin.ASM.navigation.LocalNavController
 import com.example.kotlin.R
 
 @Composable
-fun ProfileScreen() {
+fun ProfileScreen(
+    onLogout: () -> Unit = {}
+) {
+    LocalNavController.current
+    val context = LocalContext.current
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -60,7 +68,17 @@ fun ProfileScreen() {
                 fontSize = 18.sp,
                 color = Color.Black
             )
-            IconButton(onClick = { }) {
+            IconButton(onClick = {
+                // Show a toast message for logout
+                android.widget.Toast.makeText(
+                    context,
+                    "Logged out successfully",
+                    android.widget.Toast.LENGTH_SHORT
+                ).show()
+
+                // Navigate to login screen
+                onLogout()
+            }) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_logout),
                     contentDescription = "Logout",
@@ -69,35 +87,45 @@ fun ProfileScreen() {
             }
         }
 
-        Spacer(modifier = Modifier.height(44.dp))
-
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
+        // Make the content scrollable
+        LazyColumn(
             modifier = Modifier
+                .fillMaxSize()
                 .padding(horizontal = 16.dp)
-                .padding(bottom = 24.dp)
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.avatar),
-                contentDescription = "Profile picture",
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .size(80.dp)
-                    .clip(CircleShape)
-            )
-            Spacer(modifier = Modifier.width(16.dp))
-            Column {
-                Text("Bao Khanh", fontSize = 20.sp, fontWeight = FontWeight.Bold)
-                Text("khanhvo908@gmail.com", color = Color.Gray)
-            }
-        }
+            item {
+                Spacer(modifier = Modifier.height(24.dp))
 
-        Column(modifier = Modifier.padding(horizontal = 16.dp)) {
-            ProfileOption("My orders", "Already have 10 orders")
-            ProfileOption("Shipping Addresses", "03 Addresses")
-            ProfileOption("Payment Method", "You have 2 cards")
-            ProfileOption("My reviews", "Reviews for 5 items")
-            ProfileOption("Setting", "Notification, Password, FAQ, Contact")
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 24.dp)
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.avatar),
+                        contentDescription = "Profile picture",
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .size(80.dp)
+                            .clip(CircleShape)
+                    )
+                    Spacer(modifier = Modifier.width(16.dp))
+                    Column {
+                        Text("Bao Khanh", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                        Text("khanhvo908@gmail.com", color = Color.Gray)
+                    }
+                }
+
+                ProfileOption("My orders", "Already have 10 orders")
+                ProfileOption("Shipping Addresses", "03 Addresses")
+                ProfileOption("Payment Method", "You have 2 cards")
+                ProfileOption("My reviews", "Reviews for 5 items")
+                ProfileOption("Setting", "Notification, Password, FAQ, Contact")
+
+                // Add some space at the bottom for better scrolling experience
+                Spacer(modifier = Modifier.height(24.dp))
+            }
         }
     }
 }
@@ -135,5 +163,5 @@ fun ProfileOption(title: String, subtitle: String) {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun ProfileScreenPreview() {
-    ProfileScreen()
+    ProfileScreen(onLogout = {})
 }

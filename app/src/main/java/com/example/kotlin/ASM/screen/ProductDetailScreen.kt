@@ -251,16 +251,17 @@ fun ProductDetailScreenUI(
             Button(
                 onClick = { onAddToCartClick(quantity) },
                 modifier = Modifier
-                    .height(48.dp)
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .height(56.dp)
+                    .padding(bottom = 16.dp),
                 shape = RoundedCornerShape(8.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
             ) {
                 Text(
                     text = "Add to cart",
-                    color = Color.White,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 16.sp
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Medium,
+                    color = Color.White
                 )
             }
         }

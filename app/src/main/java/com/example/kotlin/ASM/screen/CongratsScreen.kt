@@ -101,18 +101,32 @@ fun CongratsScreen(
                 shape = RoundedCornerShape(8.dp),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 8.dp)
+                    .height(56.dp)
+                    .padding(bottom = 16.dp)
             ) {
-                Text(text = "Track your orders", color = Color.White)
+                Text(
+                    text = "Track your orders", 
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Medium,
+                    color = Color.White
+                )
             }
             Button(
                 onClick = onContinueShopping,
                 colors = ButtonDefaults.buttonColors(containerColor = Color.White),
                 border = BorderStroke(1.dp, Color.Black),
                 shape = RoundedCornerShape(8.dp),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp)
+                    .padding(bottom = 16.dp)
             ) {
-                Text(text = "BACK TO HOME", color = Color.Black)
+                Text(
+                    text = "BACK TO HOME", 
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Medium,
+                    color = Color.Black
+                )
             }
         }
     }
