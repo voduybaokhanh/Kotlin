@@ -14,7 +14,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
+import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -106,11 +106,11 @@ fun ProfileScreen() {
 fun ProfileOption(title: String, subtitle: String) {
     Card(
         shape = RoundedCornerShape(8.dp),
-        elevation = 4.dp,
-        backgroundColor = Color.White,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 6.dp)
+            .padding(vertical = 6.dp),
+        colors = androidx.compose.material3.CardDefaults.cardColors(containerColor = Color.White),
+        elevation = androidx.compose.material3.CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Row(
             modifier = Modifier
@@ -131,7 +131,6 @@ fun ProfileOption(title: String, subtitle: String) {
         }
     }
 }
-
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable

@@ -6,8 +6,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -28,17 +30,36 @@ import androidx.compose.ui.unit.sp
 import com.example.kotlin.R
 
 @Composable
-fun CongratsScreen() {
-    Box(
+fun CongratsScreen(
+    onContinueShopping: () -> Unit = {}
+) {
+    Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White),
-        contentAlignment = Alignment.Center
+            .background(Color.White)
     ) {
+        // Header with icons and title
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(44.dp)
+                .padding(top = 12.dp, start = 16.dp, end = 16.dp, bottom = 12.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Box(modifier = Modifier.size(20.dp)) // Empty box to balance layout
+            Text(
+                text = "Order Confirmation",
+                fontWeight = FontWeight.Bold,
+                fontSize = 18.sp,
+                color = Color.Black
+            )
+            Box(modifier = Modifier.size(20.dp)) // Empty box to balance layout
+        }
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.White, shape = RoundedCornerShape(8.dp))
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
@@ -85,7 +106,7 @@ fun CongratsScreen() {
                 Text(text = "Track your orders", color = Color.White)
             }
             Button(
-                onClick = { /* Handle back navigation */ },
+                onClick = onContinueShopping,
                 colors = ButtonDefaults.buttonColors(containerColor = Color.White),
                 border = BorderStroke(1.dp, Color.Black),
                 shape = RoundedCornerShape(8.dp),
@@ -100,5 +121,5 @@ fun CongratsScreen() {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun CongratsScreenPreview() {
-    CongratsScreen()
+    CongratsScreen(onContinueShopping = {})
 }

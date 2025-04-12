@@ -16,12 +16,9 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,35 +30,43 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.kotlin.R
+import java.util.Locale
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CheckoutScreen() {
+fun CheckoutScreen(
+    totalAmount: Double = 95.00,
+    onBackClick: () -> Unit = {},
+    onCompleteCheckout: () -> Unit = {}
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Color(0xFFF5F5F5))
     ) {
-        // Top Bar
-        TopAppBar(
-            title = {
-                Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-                    Text("Check out")
-                }
-            },
-            navigationIcon = {
-                IconButton(onClick = { /* Handle back navigation */ }) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_arrow_left),
-                        contentDescription = "Back",
-                        modifier = Modifier.size(20.dp)
-                    )
-                }
-            },
-            colors = TopAppBarDefaults.topAppBarColors(
-                containerColor = Color.White
+        // Header with icons and title
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(44.dp)
+                .padding(top = 12.dp, start = 16.dp, end = 16.dp, bottom = 12.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            IconButton(onClick = onBackClick) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_arrow_left),
+                    contentDescription = "Back",
+                    modifier = Modifier.size(20.dp)
+                )
+            }
+            Text(
+                text = "Check out",
+                fontWeight = FontWeight.Bold,
+                fontSize = 18.sp,
+                color = Color.Black
             )
-        )
+            Box(modifier = Modifier.size(20.dp)) // Empty box to balance layout
+        }
 
         Column(
             modifier = Modifier
@@ -78,12 +83,12 @@ fun CheckoutScreen() {
             SectionTitle(title = "Delivery method")
             DeliverySection()
             Spacer(modifier = Modifier.height(16.dp))
-            OrderSummary()
+            OrderSummary(totalAmount = totalAmount)
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        SubmitButton()
+        SubmitButton(onCompleteCheckout)
         Spacer(modifier = Modifier.height(16.dp))
     }
 }
@@ -166,7 +171,7 @@ fun DeliverySection() {
 }
 
 @Composable
-fun OrderSummary() {
+fun OrderSummary(totalAmount: Double = 95.00) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -179,7 +184,7 @@ fun OrderSummary() {
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(text = "Order:")
-            Text(text = "$ 95.00")
+            Text(text = String.format(Locale.getDefault(), "$ %.2f", totalAmount).replace(",", "."))
         }
         Spacer(modifier = Modifier.height(8.dp))
         Row(
@@ -195,15 +200,19 @@ fun OrderSummary() {
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(text = "Total:", fontWeight = FontWeight.Bold)
-            Text(text = "$ 100.00", fontWeight = FontWeight.Bold)
+            Text(
+                text = String.format(Locale.getDefault(), "$ %.2f", totalAmount + 5.0)
+                    .replace(",", "."),
+                fontWeight = FontWeight.Bold
+            )
         }
     }
 }
 
 @Composable
-fun SubmitButton() {
+fun SubmitButton(onCompleteCheckout: () -> Unit) {
     Button(
-        onClick = { /* Handle submit order */ },
+        onClick = onCompleteCheckout,
         modifier = Modifier
             .fillMaxWidth()
             .height(56.dp),
@@ -221,5 +230,9 @@ fun SubmitButton() {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun CheckoutScreenPreview() {
-    CheckoutScreen()
+    CheckoutScreen(
+        totalAmount = 95.00,
+        onBackClick = {},
+        onCompleteCheckout = {}
+    )
 }

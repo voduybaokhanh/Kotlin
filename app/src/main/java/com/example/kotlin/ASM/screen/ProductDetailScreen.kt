@@ -20,6 +20,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -33,15 +35,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.kotlin.R
 import java.util.Locale
 
+// Lớp này không còn cần thiết vì chúng ta đã chuyển sang sử dụng Compose Navigation
+// Giữ lại để tương thích với mã cũ nếu cần
 class ProductDetailScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,37 +58,57 @@ class ProductDetailScreen : AppCompatActivity() {
         Log.d("ProductDetailScreen", "Received product: $name, price: $price, image: $imageRes")
 
         setContent {
-            ProductDetailScreenUI(name = name, price = price, imageRes = imageRes)
+            ProductDetailScreenUI(
+                name = name,
+                price = price,
+                imageRes = imageRes,
+                onBackClick = { finish() },
+                onAddToCartClick = { /* Không thể xử lý trong Activity cũ */ }
+            )
         }
     }
 }
 
 @Composable
-fun ProductDetailScreenUI(name: String, price: Double, imageRes: Int) {
+fun ProductDetailScreenUI(
+    name: String,
+    price: Double,
+    imageRes: Int,
+    onBackClick: () -> Unit,
+    onAddToCartClick: (quantity: Int) -> Unit
+) {
     var quantity by remember { mutableIntStateOf(1) }
-    val context = LocalContext.current
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
     ) {
+        // Header with icons and title
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically
+                .height(44.dp)
+                .padding(top = 12.dp, start = 16.dp, end = 16.dp, bottom = 12.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            IconButton(onClick = {
-                // Use the Activity context to finish
-                (context as? AppCompatActivity)?.finish()
-            }) {
+            IconButton(onClick = onBackClick) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_arrow_left),
                     contentDescription = "Back",
-                    tint = Color.Black
+                    modifier = Modifier.size(20.dp)
                 )
             }
+            Text(
+                text = name,
+                fontWeight = FontWeight.Bold,
+                fontSize = 18.sp,
+                color = Color.Black,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+            Box(modifier = Modifier.size(20.dp)) // Empty box to balance layout
         }
 
         Box(
@@ -224,12 +248,13 @@ fun ProductDetailScreenUI(name: String, price: Double, imageRes: Int) {
                 .padding(16.dp),
             horizontalArrangement = Arrangement.Center
         ) {
-            Box(
+            Button(
+                onClick = { onAddToCartClick(quantity) },
                 modifier = Modifier
                     .height(48.dp)
-                    .fillMaxWidth()
-                    .background(Color.Black, RoundedCornerShape(8.dp)),
-                contentAlignment = Alignment.Center
+                    .fillMaxWidth(),
+                shape = RoundedCornerShape(8.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
             ) {
                 Text(
                     text = "Add to cart",
@@ -269,6 +294,8 @@ fun ProductDetailScreenUIPreview() {
     ProductDetailScreenUI(
         name = "Minimal Stand",
         price = 50.0,
-        imageRes = R.drawable.img_stand
+        imageRes = R.drawable.img_stand,
+        onBackClick = {},
+        onAddToCartClick = {}
     )
 }

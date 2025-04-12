@@ -1,14 +1,13 @@
 package com.example.kotlin.ASM.screen
 
-import android.content.Intent
-import android.util.Log
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -37,7 +36,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -56,26 +54,27 @@ data class Product(
 )
 
 @Composable
-fun HomeScreen() {
-    // Get context at composable function level
-    // This is used in the ProductItem click handler
-    val context = LocalContext.current
-
+fun HomeScreen(
+    onProductClick: (name: String, price: Float, imageRes: Int) -> Unit,
+    onFavoriteClick: (name: String, price: Float, imageRes: Int) -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Color(0xFFF5F5F5))
             .padding(16.dp)
     ) {
+        // Header with icons and title
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_search),
                 contentDescription = "Search",
-                modifier = Modifier.size(24.dp)
+                modifier = Modifier.size(20.dp)
             )
 
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -86,7 +85,7 @@ fun HomeScreen() {
             Icon(
                 imageVector = Icons.Default.ShoppingCart,
                 contentDescription = "Cart",
-                modifier = Modifier.size(24.dp)
+                modifier = Modifier.size(20.dp)
             )
         }
 
@@ -142,41 +141,38 @@ fun HomeScreen() {
             verticalArrangement = Arrangement.spacedBy(16.dp),
             modifier = Modifier
                 .fillMaxWidth()
-                .weight(1f)
+                .weight(1f),
+            contentPadding = PaddingValues(bottom = 16.dp)
         ) {
             items(products) { product ->
-                // Use context from outer scope
-                ProductItem(product = product) {
-                    // Using context directly from the outer scope
-                    try {
-                        val intent = Intent(
-                            context,
-                            Class.forName("com.example.kotlin.ASM.screen.ProductDetailScreen")
-                        ).apply {
-                            putExtra("name", product.name)
-                            putExtra("price", product.price)
-                            putExtra("imageRes", product.imageRes)
-
-                            // Log để debug
-                            Log.d(
-                                "HomeScreen",
-                                "Launching product: ${product.name}, image: ${product.imageRes}"
-                            )
-                        }
-                        context.startActivity(intent)
-                    } catch (e: Exception) {
-                        Log.e("HomeScreen", "Error launching ProductDetailScreen", e)
+                ProductItem(
+                    product = product,
+                    onClick = {
+                        onProductClick(
+                            product.name,
+                            product.price.toFloat(),
+                            product.imageRes
+                        )
+                    },
+                    onFavoriteClick = {
+                        onFavoriteClick(
+                            product.name,
+                            product.price.toFloat(),
+                            product.imageRes
+                        )
                     }
-                }
+                )
             }
-
         }
-
     }
 }
 
 @Composable
-fun ProductItem(product: Product, onClick: () -> Unit) {
+fun ProductItem(
+    product: Product,
+    onClick: () -> Unit,
+    onFavoriteClick: () -> Unit
+) {
     var isFavorite by remember { mutableStateOf(product.isFavorite) }
 
     Column(
@@ -185,12 +181,7 @@ fun ProductItem(product: Product, onClick: () -> Unit) {
             .fillMaxWidth()
             .clip(RoundedCornerShape(12.dp))
             .background(Color.White)
-            .clickable(
-                interactionSource = remember { MutableInteractionSource() },
-                indication = null // Material 3 handles ripple effects automatically
-            ) {
-                onClick()
-            }
+            .clickable { onClick() }
     ) {
         Box(
             modifier = Modifier
@@ -206,14 +197,17 @@ fun ProductItem(product: Product, onClick: () -> Unit) {
                 modifier = Modifier.fillMaxSize()
             )
 
+            // Add to cart button
             IconButton(
-                onClick = { isFavorite = !isFavorite },
+                onClick = {
+                    isFavorite = !isFavorite
+                    onFavoriteClick()
+                },
                 modifier = Modifier
                     .size(30.dp)
                     .align(Alignment.BottomEnd)
                     .clip(RoundedCornerShape(6.dp))
                     .background(Color(0x60606066))
-                    .padding(5.dp)
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_shopping_bag),
@@ -225,8 +219,17 @@ fun ProductItem(product: Product, onClick: () -> Unit) {
         }
 
         Column(modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)) {
-            Text(product.name, fontSize = 14.sp, maxLines = 1)
-            Text("$ ${product.price}", fontSize = 14.sp, fontWeight = FontWeight.Bold)
+            Text(
+                text = product.name,
+                fontSize = 14.sp,
+                maxLines = 1,
+                overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
+            )
+            Text(
+                text = "$ ${product.price}",
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Bold
+            )
         }
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -236,5 +239,8 @@ fun ProductItem(product: Product, onClick: () -> Unit) {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun HomeScreenPreview() {
-    HomeScreen()
+    HomeScreen(
+        onProductClick = { _, _, _ -> },
+        onFavoriteClick = { _, _, _ -> }
+    )
 }

@@ -16,14 +16,14 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Divider
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
-import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -71,11 +71,11 @@ fun SignUpScreen(navController: NavController) {
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.padding(top = 30.dp)
             ) {
-                Divider(
-                    color = Color.Gray,
+                HorizontalDivider(
                     modifier = Modifier
                         .weight(1f)
-                        .height(1.dp)
+                        .height(1.dp),
+                    color = Color.Gray
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Image(
@@ -86,11 +86,11 @@ fun SignUpScreen(navController: NavController) {
                         .background(Color.White, shape = CircleShape)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Divider(
-                    color = Color.Gray,
+                HorizontalDivider(
                     modifier = Modifier
                         .weight(1f)
-                        .height(1.dp)
+                        .height(1.dp),
+                    color = Color.Gray
                 )
             }
             Spacer(modifier = Modifier.height(60.dp))
@@ -112,10 +112,11 @@ fun SignUpScreen(navController: NavController) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp),
-                colors = TextFieldDefaults.textFieldColors(
+                colors = TextFieldDefaults.colors(
                     focusedIndicatorColor = Color.Black,
                     unfocusedIndicatorColor = Color.Black,
-                    backgroundColor = Color.Transparent
+                    focusedContainerColor = Color.Transparent,
+                    unfocusedContainerColor = Color.Transparent
                 ),
                 singleLine = true
             )
@@ -128,10 +129,11 @@ fun SignUpScreen(navController: NavController) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp),
-                colors = TextFieldDefaults.textFieldColors(
+                colors = TextFieldDefaults.colors(
                     focusedIndicatorColor = Color.Black,
                     unfocusedIndicatorColor = Color.Black,
-                    backgroundColor = Color.Transparent
+                    focusedContainerColor = Color.Transparent,
+                    unfocusedContainerColor = Color.Transparent
                 ),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                 singleLine = true
@@ -145,10 +147,11 @@ fun SignUpScreen(navController: NavController) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp),
-                colors = TextFieldDefaults.textFieldColors(
+                colors = TextFieldDefaults.colors(
                     focusedIndicatorColor = Color.Black,
                     unfocusedIndicatorColor = Color.Black,
-                    backgroundColor = Color.Transparent
+                    focusedContainerColor = Color.Transparent,
+                    unfocusedContainerColor = Color.Transparent
                 ),
                 visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 trailingIcon = {
@@ -171,10 +174,11 @@ fun SignUpScreen(navController: NavController) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp),
-                colors = TextFieldDefaults.textFieldColors(
+                colors = TextFieldDefaults.colors(
                     focusedIndicatorColor = Color.Black,
                     unfocusedIndicatorColor = Color.Black,
-                    backgroundColor = Color.Transparent
+                    focusedContainerColor = Color.Transparent,
+                    unfocusedContainerColor = Color.Transparent
                 ),
                 visualTransformation = if (confirmPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 trailingIcon = {
@@ -195,7 +199,7 @@ fun SignUpScreen(navController: NavController) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp),
-                colors = ButtonDefaults.buttonColors(backgroundColor = Color.Black)
+                colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
             ) {
                 Text(text = "SIGN UP", color = Color.White)
             }

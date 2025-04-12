@@ -5,14 +5,12 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.kotlin.R
 
@@ -36,16 +34,13 @@ sealed class BottomNavItem(
 }
 
 @Composable
-fun BottomNavBar(navController: NavController) {
+fun BottomNavBar(navController: NavController, currentRoute: String? = null) {
     val items = listOf(
         BottomNavItem.Home,
         BottomNavItem.Product,
         BottomNavItem.Notifications,
         BottomNavItem.Profile
     )
-
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute = navBackStackEntry?.destination?.route
 
     NavigationBar(
         containerColor = Color.White,
@@ -63,14 +58,16 @@ fun BottomNavBar(navController: NavController) {
                 },
                 selected = selected,
                 onClick = {
-                    navController.navigate(item.route) {
-                        navController.graph.startDestinationRoute?.let { route ->
-                            popUpTo(route) {
-                                saveState = true
+                    // Only navigate if we're not already on this route
+                    if (currentRoute != item.route) {
+                        navController.navigate(item.route) {
+                            // Clear the entire back stack when navigating between tabs
+                            popUpTo(0) {
+                                inclusive = true
                             }
+                            // Avoid multiple copies of the same destination
+                            launchSingleTop = true
                         }
-                        launchSingleTop = true
-                        restoreState = true
                     }
                 }
             )
