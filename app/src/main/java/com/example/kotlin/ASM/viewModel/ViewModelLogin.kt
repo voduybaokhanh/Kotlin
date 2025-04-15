@@ -14,42 +14,75 @@ import retrofit2.Response
 
 class ViewModelLogin : ViewModel() {
 
-    private val _login = MutableLiveData<LoginResponse>()
-    val login: LiveData<LoginResponse> = _login
+    private val _login = MutableLiveData<LoginResponse?>()
+    val login: LiveData<LoginResponse?> = _login
+    
+    // Biến để theo dõi trạng thái đang gọi API
+    private var isLoggingIn = false
     
     fun loginViewModel(loginRequest: LoginRequest) {
+        // Nếu đang trong quá trình đăng nhập, không gọi API lần nữa
+        if (isLoggingIn) return
+        
+        // Log thông tin request để debug
+        Log.d("LoginViewModel", "Attempting login with: Email=${loginRequest.Email}, Password=${loginRequest.Password}")
+        
+        isLoggingIn = true
+        
         viewModelScope.launch {
             try {
+                Log.d("LoginViewModel", "Sending login request...")
                 val response: Response<LoginResponse> = RetrofitInstance.api.login(loginRequest)
+                
+                Log.d("LoginViewModel", "Response code: ${response.code()}")
+                Log.d("LoginViewModel", "Response message: ${response.message()}")
+                
                 if (response.isSuccessful) {
+                    Log.d("LoginViewModel", "Login successful")
                     response.body()?.let { 
+                        Log.d("LoginViewModel", "Response body: success=${it.success}, token=${it.token}")
                         _login.value = it
                     } ?: run {
+                        Log.d("LoginViewModel", "Response body is null")
                         // Nếu body là null, tạo một đối tượng LoginResponse với success = false
                         _login.value = LoginResponse(
                             success = false,
                             token = "",
-                            data = Account("", "", "")
+                            data = Account(Email = "", FullName = "", Password = "")
                         )
                     }
                 } else {
                     // Xử lý lỗi response
-                    Log.d("=======", "Error: ${response.code()} - ${response.message()}")
+                    Log.d("LoginViewModel", "Login failed: ${response.code()} - ${response.message()}")
+                    
+                    // Thử đọc error body
+                    val errorBody = response.errorBody()?.string()
+                    Log.d("LoginViewModel", "Error body: $errorBody")
+                    
                     _login.value = LoginResponse(
                         success = false,
                         token = "",
-                        data = Account("", "", "")
+                        data = Account(Email = "", FullName = "", Password = "")
                     )
                 }
             } catch (e: Exception) {
                 // Xử lý lỗi kết nối
-                Log.d("=======", e.toString())
+                Log.d("LoginViewModel", "Exception during login: ${e.message}")
+                Log.d("LoginViewModel", "Stack trace: ${e.stackTraceToString()}")
+                
                 _login.value = LoginResponse(
                     success = false,
                     token = "",
-                    data = Account("", "", "")
+                    data = Account(Email = "", FullName = "", Password = "")
                 )
+            } finally {
+                isLoggingIn = false
             }
         }
+    }
+    
+    // Hàm để reset trạng thái login sau khi xử lý xong
+    fun resetLoginState() {
+        _login.value = null
     }
 }

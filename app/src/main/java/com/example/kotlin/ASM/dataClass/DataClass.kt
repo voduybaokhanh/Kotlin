@@ -1,14 +1,16 @@
 package com.example.kotlin.ASM.dataClass
 
+// Sử dụng tên trường chính xác như backend mong đợi
 data class Account(
-    val email: String,
-    val fullName: String,
-    val password: String
+    val Email: String,
+    val FullName: String,
+    val Password: String
 )
 
+// Sử dụng tên trường chính xác như backend mong đợi
 data class LoginRequest(
-    val email: String,
-    val password: String
+    val Email: String,
+    val Password: String
 )
 
 data class LoginResponse(
@@ -17,10 +19,11 @@ data class LoginResponse(
     val data: Account
 )
 
+// Sử dụng tên trường chính xác như backend mong đợi
 data class ReqRegister(
-    val email: String,
-    val password: String,
-    val fullName: String
+    val Email: String,
+    val Password: String,
+    val FullName: String
 )
 
 data class ResRegister(
